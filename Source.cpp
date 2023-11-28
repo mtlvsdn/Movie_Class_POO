@@ -70,7 +70,7 @@ public:
 		setName("Home Alone 2");
 		setDescription("A very good Christmas movie.");
 		setActorsCount(5);
-		std::string newArray[] = {"John", "Mell" "Laura", "Greg", "Ben"};
+		std::string newArray[] = {"John", "Mell", "Laura", "Greg", "Ben"};
 		setActors(newArray);
 		setYear(1992);
 		isPublished(true);
@@ -103,9 +103,18 @@ public:
 		this->name = newMovie.name;
 		this->description = newMovie.description;
 		this->actorsCount = newMovie.actorsCount;
-		this->actors = newMovie.actors;
+
+		if (this->actors != nullptr) {
+			delete[] this->actors;
+		}
+		this->actors = new std::string[this->actorsCount];
+		for (int i = 0; i < this->actorsCount; i++) {
+			this->actors[i] = newMovie.actors[i];
+		}
+
 		this->year = newMovie.year;
 		this->published = newMovie.published;
+		return *this;
 	}
 	//overloading[]
 	std::string operator[](int index) {
@@ -172,31 +181,49 @@ public:
 
 //overloading <<
 std::ostream& operator<<(std::ostream& console, const Movie& source) {
-	console << "ID: " << source.id;
-	console << "Name: " << source.name;
-	console << "Description: " << source.description;
-	console << "Actors Count: " << source.actorsCount;
-	console << "Actor name: ";
+	console << std::endl << "ID: " << source.id;
+	console << std::endl << "Name: " << source.name;
+	console << std::endl << "Description: " << source.description;
+	console << std::endl << "Actors Count: " << source.actorsCount;
+	console << std::endl << "Actor name: ";
 	for (int i = 0; i < source.actorsCount; i++) {
 		console << ", " << source.actors[i];
 	}
-	console << "Year: " << source.year;
-	console << "Is the movie published?: " << source.published;
+	console << std::endl << "Year: " << source.year;
+	console << std::endl << "Is the movie published?: " << source.published;
+	return console;
 }
 //overloading >>
 std::istream& operator>>(std::istream& console, Movie& source) {
 	console >> source.name;
 	console >> source.description;
 	console >> source.actorsCount;
+	if (source.actors != nullptr) {
+		delete[] source.actors;
+	}
+	source.actors = new std::string[source.actorsCount];
 	for (int i = 0; i < source.actorsCount; i++) {
 		console >> source.actors[i];
 	}
 	console >> source.year;
 	console >> source.published;
+	return console;
 }
 
 int main() {
 	std::string newArray[] = { "John", "Vlad", "Bob", "Mary", "Mihai" };
 	Movie movie1(1, "Terminator", "Interesting movie", 5, newArray, 2000, true);
+	std::cout << movie1;
 
+	/*Movie movie2 = movie1;
+	Movie movie3;
+	movie3 = movie1;
+	std::cout << movie2;
+	std::cout << movie3;*/
+	
+	Movie movie4;
+	std::cout << movie4;
+	std::cout << std::endl << std::endl;
+	std::cin >> movie4;
+	std::cout << movie4;
 }
