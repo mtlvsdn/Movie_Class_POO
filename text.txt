@@ -1,0 +1,8 @@
+const int id = 1;
+	std::string name = "Home Alone 2";
+	std::string description = "A very good Christmas movie.";
+	int actorsCount = 5;
+	std::string* actors = nullptr;
+	int year = 1992;
+	bool published = false;
+	char character = '9';

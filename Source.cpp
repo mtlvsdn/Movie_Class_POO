@@ -10,6 +10,7 @@ private:
 	std::string* actors = nullptr;
 	int year = 1992;
 	bool published = false;
+	char character = '9';
 
 public:
 	//Setters
@@ -123,50 +124,79 @@ public:
 	friend std::istream& operator>>(std::istream& console, Movie& newMovie);
 	// overloading cast int to string
 	operator int() const {
-
+		int number = static_cast<int>(this->character);
+		return number;
 	}
 	//overloading cast string to int
 	operator std::string() const {
-
+		return std::to_string(this->actorsCount);
 	}
 	//overloading ==
 	bool operator==(const Movie& source) {
-
+		if (this->name == source.name) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	//overloading >=
 	bool operator>=(const Movie& source) {
-
+		if (this->actorsCount >= source.actorsCount) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	//overloading ++
 	void operator++() {
-
+		this->actorsCount++;
 	}
 	void operator--() {
-
+		this->actorsCount--;
 	}
 	int operator+(const Movie& source) {
-
+		return this->actorsCount + source.actorsCount;
 	}
 	int operator-(const Movie& source) {
-
+		return this->id - source.id;
 	}
 	int operator*(const Movie& source) {
-
+		return this->actorsCount * source.actorsCount;
 	}
 	float operator/(const Movie& source) {
-
+		return this->actorsCount / source.actorsCount;
 	}
 };
 
 //overloading <<
 std::ostream& operator<<(std::ostream& console, const Movie& source) {
-
+	console << "ID: " << source.id;
+	console << "Name: " << source.name;
+	console << "Description: " << source.description;
+	console << "Actors Count: " << source.actorsCount;
+	console << "Actor name: ";
+	for (int i = 0; i < source.actorsCount; i++) {
+		console << ", " << source.actors[i];
+	}
+	console << "Year: " << source.year;
+	console << "Is the movie published?: " << source.published;
 }
 //overloading >>
 std::istream& operator>>(std::istream& console, Movie& source) {
-
+	console >> source.name;
+	console >> source.description;
+	console >> source.actorsCount;
+	for (int i = 0; i < source.actorsCount; i++) {
+		console >> source.actors[i];
+	}
+	console >> source.year;
+	console >> source.published;
 }
 
 int main() {
+	std::string newArray[] = { "John", "Vlad", "Bob", "Mary", "Mihai" };
+	Movie movie1(1, "Terminator", "Interesting movie", 5, newArray, 2000, true);
 
 }
